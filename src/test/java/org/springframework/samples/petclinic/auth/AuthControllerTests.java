@@ -25,7 +25,6 @@ import org.springframework.samples.petclinic.auth.payload.request.LoginRequest;
 import org.springframework.samples.petclinic.auth.payload.request.SignupRequest;
 import org.springframework.samples.petclinic.configuration.jwt.JwtUtils;
 import org.springframework.samples.petclinic.configuration.services.UserDetailsImpl;
-import org.springframework.samples.petclinic.owner.OwnerRestController;
 import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -73,28 +72,6 @@ class AuthControllerTests {
 	private SignupRequest signupRequest;
 	private UserDetailsImpl userDetails;
 	private String token;
-
-	@BeforeEach
-	void setup() {
-		loginRequest = new LoginRequest();
-		loginRequest.setUsername("owner");
-		loginRequest.setPassword("password");
-
-		signupRequest = new SignupRequest();
-		signupRequest.setUsername("username");
-		signupRequest.setPassword("password");
-		signupRequest.setAddress("Address");
-		signupRequest.setCity("City");
-		signupRequest.setFirstName("Test");
-		signupRequest.setLastName("Test");
-		signupRequest.setTelephone("999999999");
-		signupRequest.setAuthority("OWNER");
-
-		userDetails = new UserDetailsImpl(1, loginRequest.getUsername(), loginRequest.getPassword(),
-				List.of(new SimpleGrantedAuthority("OWNER")));
-
-		token = "JWT TOKEN";
-	}
 
 	@Test
 	void shouldAuthenticateUser() throws Exception {

@@ -16,23 +16,12 @@ public class SpringSecurityWebAuxTestConfiguration {
     @Bean
     @Primary
     public UserDetailsService userDetailsService() {
-        UserDetailsImpl ownerActiveUser = new UserDetailsImpl(1, "owner", "password",
-        		Arrays.asList(
-                        new SimpleGrantedAuthority("OWNER"))
-        );
 
         UserDetailsImpl adminActiveUser = new UserDetailsImpl(1, "admin", "password",
         		Arrays.asList(
                         new SimpleGrantedAuthority("ADMIN"))
         );
-        
-        UserDetailsImpl vetActiveUser = new UserDetailsImpl(1, "vet", "password",
-        		Arrays.asList(
-                        new SimpleGrantedAuthority("VET"))
-        );
 
-        return new InMemoryUserDetailsManager(Arrays.asList(
-        		ownerActiveUser, adminActiveUser, vetActiveUser
-        ));
+        return new InMemoryUserDetailsManager(Arrays.asList(adminActiveUser));
     }
 }

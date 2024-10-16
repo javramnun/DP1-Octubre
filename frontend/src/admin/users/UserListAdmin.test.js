@@ -10,8 +10,6 @@ describe('UserListAdmin', () => {
 
     test('renders users correctly', async () => {
         render(<UserListAdmin />);
-        const owner1 = await screen.findByRole('cell', { 'name': 'owner1' });
-        expect(owner1).toBeInTheDocument();
 
         const editButtons = await screen.findAllByRole('link', { 'name': /edit/ });
         expect(editButtons).toHaveLength(2);
@@ -21,9 +19,6 @@ describe('UserListAdmin', () => {
 
         const admin1 = await screen.findByRole('cell', { 'name': 'admin1' });
         expect(admin1).toBeInTheDocument();
-
-        const owners = await screen.findAllByRole('row', {},);
-        expect(owners).toHaveLength(3);
     });
 
     test('delete user correct', async () => {

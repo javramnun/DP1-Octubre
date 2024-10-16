@@ -33,12 +33,6 @@ class AuthoritiesServiceTests {
 	}
 
 	@Test
-	void shouldFindAuthoritiesByAuthority() {
-		Authorities auth = this.authService.findByAuthority("VET");
-		assertEquals("VET", auth.getAuthority());
-	}
-
-	@Test
 	void shouldNotFindAuthoritiesByIncorrectAuthority() {
 		assertThrows(ResourceNotFoundException.class, () -> this.authService.findByAuthority("authnotexists"));
 	}
@@ -58,16 +52,5 @@ class AuthoritiesServiceTests {
 		int finalCount = ((Collection<Authorities>) this.authService.findAll()).size();
 		assertEquals(count + 1, finalCount);
 	}
-
-//	@Test
-//	@Transactional
-//	void shouldAddAuthoritiesToUser() {
-//		User user = userService.findUser("owner1");
-//		assertEquals("OWNER" ,user.getAuthority().getAuthority());
-//		
-//		this.authService.saveAuthorities("owner1", "TEST");
-//		assertEquals("TEST" ,user.getAuthority().getAuthority());
-//
-//	}
 
 }

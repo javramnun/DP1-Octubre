@@ -42,8 +42,6 @@ public class SecurityConfiguration {
 	DataSource dataSource;
 
 	private static final String ADMIN = "ADMIN";
-	private static final String CLINIC_OWNER = "CLINIC_OWNER";
-	
 
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -59,30 +57,26 @@ public class SecurityConfiguration {
 			.requestMatchers(AntPathRequestMatcher.antMatcher("/resources/**")).permitAll()
 			.requestMatchers(AntPathRequestMatcher.antMatcher("/webjars/**")).permitAll() 
 			.requestMatchers(AntPathRequestMatcher.antMatcher("/static/**")).permitAll() 
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-resources/**")).permitAll()			
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/clinics")).permitAll()			
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-resources/**")).permitAll()					
 			.requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
 			.requestMatchers(AntPathRequestMatcher.antMatcher("/oups")).permitAll()
 			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/auth/**")).permitAll()
 			.requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**")).permitAll()
 			.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui.html")).permitAll()
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()												
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/developers")).permitAll()												
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/plan")).hasAuthority("OWNER")
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()																								
 			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/users/**")).hasAuthority(ADMIN)
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/clinicOwners/all")).hasAuthority(ADMIN)
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/clinicOwners/**")).hasAnyAuthority(ADMIN, CLINIC_OWNER)
-			.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/api/v1/consultations/**")).hasAuthority(ADMIN)
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/owners/**")).hasAuthority(ADMIN)
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/visits/**")).authenticated()			
-			.requestMatchers(AntPathRequestMatcher.antMatcher( "/api/v1/pets/stats")).hasAuthority(ADMIN)
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/pets")).authenticated()
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/pets/**")).authenticated()
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/clinics/**")).hasAnyAuthority(CLINIC_OWNER, ADMIN)
-			.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api/v1/vets/stats")).hasAuthority(ADMIN)
-			.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api/v1/vets/**")).authenticated()
-			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/vets/**")).hasAnyAuthority(ADMIN, "VET", CLINIC_OWNER) 
+			.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/api/v1/consultations/**")).hasAuthority(ADMIN)		
 			.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/games")).hasAnyAuthority(ADMIN, "PLAYER")
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/games/**")).hasAnyAuthority(ADMIN, "PLAYER")
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/cards")).hasAnyAuthority(ADMIN, "PLAYER")
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/cards/**")).hasAnyAuthority(ADMIN, "PLAYER")
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/rounds")).hasAnyAuthority(ADMIN, "PLAYER")
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/rounds/**")).hasAnyAuthority(ADMIN, "PLAYER")
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/scoreboards")).hasAnyAuthority(ADMIN, "PLAYER")
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/scoreboards/**")).hasAnyAuthority(ADMIN, "PLAYER")
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/users")).hasAnyAuthority(ADMIN, "PLAYER")
+			.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/users/**")).hasAnyAuthority(ADMIN, "PLAYER")
 			.anyRequest().authenticated())					
 			
 			.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);		
